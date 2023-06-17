@@ -2,7 +2,9 @@
 console.clear();
 class Stage {
     constructor() {
+        
         // container
+        
         this.render = function () {
             this.renderer.render(this.scene, this.camera);
         };
@@ -13,7 +15,9 @@ class Stage {
             this.scene.remove(elem);
         };
         this.container = document.getElementById('game');
+        
         // renderer
+        
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: false
@@ -21,9 +25,13 @@ class Stage {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setClearColor('#D0CBC7', 1);
         this.container.appendChild(this.renderer.domElement);
+        
         // scene
+        
         this.scene = new THREE.Scene();
+        
         // camera
+        
         let aspect = window.innerWidth / window.innerHeight;
         let d = 20;
         this.camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, -100, 1000);
@@ -31,7 +39,9 @@ class Stage {
         this.camera.position.y = 2;
         this.camera.position.z = 2;
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        
         //light
+        
         this.light = new THREE.DirectionalLight(0xffffff, 0.5);
         this.light.position.set(0, 499, 0);
         this.scene.add(this.light);
@@ -56,7 +66,9 @@ class Stage {
 }
 class Block {
     constructor(block) {
+        
         // set size and position
+        
         this.STATES = { ACTIVE: 'active', STOPPED: 'stopped', MISSED: 'missed' };
         this.MOVE_AMOUNT = 12;
         this.dimension = { width: 0, height: 0, depth: 0 };
@@ -73,7 +85,9 @@ class Block {
         this.position.y = this.dimension.height * this.index;
         this.position.z = this.targetBlock ? this.targetBlock.position.z : 0;
         this.colorOffset = this.targetBlock ? this.targetBlock.colorOffset : Math.round(Math.random() * 100);
+        
         // set color
+        
         if (!this.targetBlock) {
             this.color = 0x333344;
         }
@@ -84,14 +98,20 @@ class Block {
             var b = Math.sin(0.3 * offset + 4) * 55 + 200;
             this.color = new THREE.Color(r / 255, g / 255, b / 255);
         }
+        
         // state
+        
         this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
+        
         // set direction
+        
         this.speed = -0.1 - (this.index * 0.005);
         if (this.speed < -4)
             this.speed = -4;
         this.direction = this.speed;
+        
         // create block
+        
         let geometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
         geometry.applyMatrix(new THREE.Matrix4().makeTranslation(this.dimension.width / 2, this.dimension.height / 2, this.dimension.depth / 2));
         this.material = new THREE.MeshToonMaterial({ color: this.color, shading: THREE.FlatShading });
