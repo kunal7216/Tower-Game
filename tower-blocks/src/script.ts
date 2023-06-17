@@ -1,3 +1,4 @@
+
 console.clear();
 
 interface BlockReturn
@@ -8,6 +9,7 @@ interface BlockReturn
 	direction: number;
 	bonus?: boolean;
 }
+
 
 class Stage
 {
